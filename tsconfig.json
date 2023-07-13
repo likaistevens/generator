@@ -19,10 +19,10 @@
       "experimentalDecorators": true,
     },
   
-    "files": ["src/index.ts"],
+    "files": ["src/core/index.ts"],
   
     "include": ["./src/","__type__"],
   
-    "exclude": ["node_modules", "src/templates"]
+    "exclude": ["node_modules", "src/core/templates"]
   }
   

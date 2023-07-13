@@ -16,13 +16,18 @@ export const getJsxStr = ({
               columns={columns}
               actionRef={actionRef}
               cardBordered
-              request={async (params = {}, sort, filter) => {
-                console.log(sort, filter);
-                return request<{
-                  data: ${formTypeKey}[];
-                }>("https://proapi.azurewebsites.net/github/issues", {
-                  params,
+              request={async (params = {}) => {
+                // console.log(sort, filter);
+                const { data, total } = await Service.fetchData({
+                  type: 20,
+                  pageQuery: params,
+                  ...params,
                 });
+                return {
+                  data: data || [],
+                  success: true,
+                  total: total || 0,
+                };
               }}
               // editable={{
               //   type: 'multiple',
@@ -62,11 +67,12 @@ export const getJsxStr = ({
                   return values;
                 },
               }}
-              // pagination={{
-              //   pageSize: 5,
-              //   onChange: (page) => console.log(page),
-              // }}
-              pagination={false}
+              pagination={{
+                showQuickJumper: true,
+                pageSize: 50,
+                showSizeChanger: false,
+              }}
+              // pagination={false}
               dateFormatter="string"
               headerTitle="${headerTitle}"
               toolBarRender={() => [
